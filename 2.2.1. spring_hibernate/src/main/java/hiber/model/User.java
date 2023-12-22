@@ -1,6 +1,7 @@
 package hiber.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users_kata")
@@ -23,27 +24,6 @@ public class User {
     @JoinColumn(name = "cars_id")
     private Car noCar;
 
-    public Car getNoCar() {
-        return noCar;
-    }
-
-
-    public User setNoCar(Car noCar) {
-        this.noCar = noCar;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", noCar=" + noCar +
-                '}';
-    }
-
     public User() {
     }
 
@@ -53,11 +33,14 @@ public class User {
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, Car noCar) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public Car getNoCar() {
+        return noCar;
+    }
+
+
+    public User setNoCar(Car noCar) {
         this.noCar = noCar;
+        return this;
     }
 
     public Long getId() {
@@ -90,5 +73,28 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", noCar=" + noCar +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email);
     }
 }
